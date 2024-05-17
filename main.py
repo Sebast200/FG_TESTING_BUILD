@@ -41,7 +41,7 @@ while True:
     debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_2.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
-
+    print("Hola")
 
     pygame.display.flip()
     RELOJ.tick(60)
