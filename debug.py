@@ -8,6 +8,6 @@ class debug ():
         font = pygame.font.Font(None, 30)  
         text = font.render(_text + str(variable), True, 'white')
         text_rect = text.get_rect()
-        text_rect.center = (100, pos_y)
+        text_rect.topleft = (30, pos_y)
         self.screen.blit(text, text_rect)
     

@@ -33,8 +33,12 @@ while True:
     #Gameplay
     test_character.update(Screen,floor, DISPLAYSURF)    
     test_character_2.update(Screen,floor, DISPLAYSURF)
-    pos_y = 50
-    debug_test.print("Collision: ", test_character.collision, pos_y)
+    pos_y = 20
+    i = 30 
+    debug_test.print("Jumping: ", test_character.jumping, pos_y)
+    debug_test.print("Falling: ", test_character.can_dash, pos_y + i) 
+    i+=i
+    debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_2.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
 
