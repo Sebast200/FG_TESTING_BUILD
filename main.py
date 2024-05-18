@@ -60,7 +60,36 @@ while True:
         debug_test.print("Side Left: ", test_character.side_left, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_2.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
-
-
     pygame.display.flip()
     RELOJ.tick(60)
+
+'''
+Tareas Completadas:
+
+16-05-2024 // ??:??
+-Agregar cajas para personaje
+-Agregar segundo jugador
+-Agregar movimiento a la clase del personaje
+-Agregar movimiento a segundo jugador
+
+17-05-2024 // ??:??
+-Agregar colisiones tanto suelo como paredes (Colision con pantalla)
+-Agregar salto y agacharse
+
+18-05-2024 // 3:18
+-Agregar la posibilidad de dashear (Feedback completado!)
+-Agregar hacia donde fue la ultima direccion de movimiento (Donde mirara el personaje)
+-Agregar el modo debug (Clase debug)
+-Agregar la posibilidad de ver los movimientos de la caja 1 en la clase debug
+-Agregar comentario para tareas completadas, pendientes y deseables
+
+Tareas pendientes y deseables para el dia siguiente:
+-Pendientes:
+    -Agregar Colision con la pared izquierda de la pantalla al ejecutar un dash
+    -Agregar hitboxes
+-Deseables:
+    -Agregar golpes debiles y añadirles hitbox
+    -Agregar patadas debiles y añadirles hitbox
+    -Agregar skin a caja 1 cuando no este en movimiento
+
+'''
