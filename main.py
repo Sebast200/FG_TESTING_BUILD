@@ -37,6 +37,7 @@ while True:
     test_character.update(Screen,floor, DISPLAYSURF)    
     test_character_2.update(Screen,floor, DISPLAYSURF)
     if debug_mode:
+        debug_test.show_buttons()
         pos_y = 20
         i = 30 
         debug_test.print("Jumping: ", test_character.jumping, pos_y)
@@ -46,7 +47,9 @@ while True:
         i+=30
         debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
         i+=30
-        debug_test.print("Moving_right: ", test_character.moving_right, pos_y + i)
+        debug_test.print("Moving Right: ", test_character.moving_right, pos_y + i)
+        i+=30
+        debug_test.print("Movig Left: ", test_character.moving_left, pos_y + i)
         i+=30
         debug_test.print("Side Right: ", test_character.side_right, pos_y + i)
         i+=30

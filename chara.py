@@ -28,7 +28,6 @@ class character(pygame.sprite.Sprite) :
         self.down_count = 1
         self.crouch_pos = 500
         self.moving_forward = 0
-        self.nor_dashing = 0
         self.dashing_count = 0
         self.dash_speed = 10
 
@@ -36,6 +35,7 @@ class character(pygame.sprite.Sprite) :
         self.jumping = False
         self.crouch = False
         self.moving_right = False
+        self.moving_left = False
         self.dashing = False
         self.can_dash = False
         self.side_right = True
@@ -64,7 +64,7 @@ class character(pygame.sprite.Sprite) :
 
     def movements(self):
         userInput = pygame.key.get_pressed()
-        if self.dashing == False:
+        if self.dashing == False: 
             #Player 1
             if self.player == 1:
                 #Right
@@ -79,6 +79,7 @@ class character(pygame.sprite.Sprite) :
                     self.rect.x -= self.speed
                     self.side_right = False
                     self.side_left = True
+                    self.moving_left = True
 
                 #Jump
                 if self.count_jumps < self.starting_jumps:
@@ -101,20 +102,25 @@ class character(pygame.sprite.Sprite) :
                         self.speed = 5
                         self.crouch = False
 
-                #Boolean for forward
-                if self.moving_right == True and self.nor_dashing <10:
+                #Boolean for right dashing
+                if self.moving_right == True:
                     self.moving_forward += 1
                 if self.moving_forward >= 10 and userInput[pygame.K_RIGHT] == False:
                     self.moving_right = False
                     self.moving_forward = 0
                     self.can_dash = False
-                if self.moving_forward < 10 and self.moving_forward > 1:
-                    if userInput[pygame.K_RIGHT] == False:
+                if self.moving_forward < 10 and self.moving_forward > 1 and self.crouch == False:
+                    if userInput[pygame.K_RIGHT] == False and self.moving_left == False:
                         self.can_dash = True
                 if self.can_dash:
                     if userInput[pygame.K_RIGHT]:
                         self.dashing = True
                         self.can_dash = False
+
+                #Boolean for left dashing
+                if userInput[pygame.K_LEFT] == False:
+                    self.moving_left = False
+
             #Player 2
             if self.player == 2:
 
@@ -161,15 +167,6 @@ class character(pygame.sprite.Sprite) :
             if self.dashing_count == 15:
                 self.dashing = False
                 self.dashing_count = 0
-        '''userInput = pygame.key.get_pressed()
-        if self.dashing and self.dashing_count < 15:
-            self.rect.x += self.speed + 10
-            self.dashing_count += 1
-        if self.dashing_count >= 15:
-            self.rect.x += self.speed + 1
-            if userInput[pygame.K_RIGHT] == False:
-                self.dashing = False
-                self.dashing_count = 0'''
 
     def collisions (self, screen, floor):
         if self.rect.colliderect(floor):
