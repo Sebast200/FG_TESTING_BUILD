@@ -43,7 +43,7 @@ while True:
         debug_test.print("Jumping: ", test_character.jumping, pos_y)
         debug_test.print("Can Dash: ", test_character.can_dash, pos_y + i)
         i+=30
-        debug_test.print("Dashing: ", test_character.dashing, pos_y + i) 
+        debug_test.print("Dashing Right: ", test_character.dashing_right, pos_y + i) 
         i+=30
         debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
         i+=30
@@ -54,6 +54,8 @@ while True:
         debug_test.print("Side Right: ", test_character.side_right, pos_y + i)
         i+=30
         debug_test.print("Side Left: ", test_character.side_left, pos_y + i)
+        i+=30
+        debug_test.print("Jump Speed: ", test_character.jump_speed, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_2.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
 

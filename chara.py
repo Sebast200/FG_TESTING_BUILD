@@ -13,7 +13,8 @@ class character(pygame.sprite.Sprite) :
         #Rect Creation
         self.image = pygame.Surface ((self.rect_width,self.rect_height), pygame.SRCALPHA)
         self.rect = self.image.get_rect()
-        self.rect.center = (pos_x,450)
+        self.pos_y = 450
+        self.rect.center = (pos_x,self.pos_y)
         self.image.fill((255, 0, 0, 128), pygame.Rect(2, 2, self.rect_width, self.rect_height))
         #Speed Variables
         self.speed = 5
@@ -27,7 +28,7 @@ class character(pygame.sprite.Sprite) :
         #Movement Variables
         self.down_count = 1
         self.crouch_pos = 500
-        self.moving_forward = 0
+        self.moving_right_count = 0
         self.dashing_count = 0
         self.dash_speed = 10
 
@@ -36,7 +37,8 @@ class character(pygame.sprite.Sprite) :
         self.crouch = False
         self.moving_right = False
         self.moving_left = False
-        self.dashing = False
+        self.dashing_right = False
+        self.dashing_left = False
         self.can_dash = False
         self.side_right = True
         self.side_left = False
@@ -46,7 +48,6 @@ class character(pygame.sprite.Sprite) :
 
 
     def update(self, screen, floor, screendisplay):
-        self.caida()
         self.movements()
         self.jump()
         self.dash()
@@ -58,13 +59,9 @@ class character(pygame.sprite.Sprite) :
     def draw (self, screen):
         pygame.draw.rect(screen, 'red', self.rect,10)
 
-    def caida (self):
-        if self.jumping == False:
-            self.rect.y = self.rect.y + 5
-
     def movements(self):
         userInput = pygame.key.get_pressed()
-        if self.dashing == False: 
+        if self.dashing_right == False: 
             #Player 1
             if self.player == 1:
                 #Right
@@ -83,7 +80,7 @@ class character(pygame.sprite.Sprite) :
 
                 #Jump
                 if self.count_jumps < self.starting_jumps:
-                    if userInput[pygame.K_UP] and self.crouch == False:
+                    if userInput[pygame.K_UP] and self.crouch == False and self.jumping == False:
                         self.count_jumps += 1
                         self.jumping = True
 
@@ -104,17 +101,17 @@ class character(pygame.sprite.Sprite) :
 
                 #Boolean for right dashing
                 if self.moving_right == True:
-                    self.moving_forward += 1
-                if self.moving_forward >= 10 and userInput[pygame.K_RIGHT] == False:
+                    self.moving_right_count += 1
+                if self.moving_right_count >= 10 and userInput[pygame.K_RIGHT] == False:
                     self.moving_right = False
-                    self.moving_forward = 0
+                    self.moving_right_count = 0
                     self.can_dash = False
-                if self.moving_forward < 10 and self.moving_forward > 1 and self.crouch == False:
+                if self.moving_right_count < 10 and self.moving_right_count > 1 and self.crouch == False:
                     if userInput[pygame.K_RIGHT] == False and self.moving_left == False:
                         self.can_dash = True
                 if self.can_dash:
                     if userInput[pygame.K_RIGHT]:
-                        self.dashing = True
+                        self.dashing_right = True
                         self.can_dash = False
 
                 #Boolean for left dashing
@@ -158,24 +155,25 @@ class character(pygame.sprite.Sprite) :
         if self.jump_speed < - self.start_jump_speed:
             self.jumping = False
             self.jump_speed = self.start_jump_speed
+            self.rect.y = self.pos_y
     
     def dash (self):
-        userInput = pygame.key.get_pressed()
-        if self.dashing:
+        if self.dashing_right:
             self.rect.x += self.speed + self.dash_speed
             self.dashing_count += 1
             if self.dashing_count == 15:
-                self.dashing = False
+                self.dashing_right = False
                 self.dashing_count = 0
 
     def collisions (self, screen, floor):
         if self.rect.colliderect(floor):
             self.rect.y = self.rect.y - self.speed
             self.count_jumps = 0
+            self.jumping = False
         if self.rect.x <= 0:
             self.rect.x = self.rect.x + self.speed
         if self.rect.x >= screen[0] - self.rect.width:
-            if self.dashing:
+            if self.dashing_right:
                 self.rect.x = self.rect.x - self.speed - self.dash_speed 
             else:
                 self.rect.x = self.rect.x - self.speed
