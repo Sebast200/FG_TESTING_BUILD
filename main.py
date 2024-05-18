@@ -21,6 +21,9 @@ debug_test = debug.debug(DISPLAYSURF)
 #Floor
 floor = pygame.Rect(0,600,1280,5)
 
+#Debug Boolean
+debug_mode = True
+
 while True: 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -33,15 +36,24 @@ while True:
     #Gameplay
     test_character.update(Screen,floor, DISPLAYSURF)    
     test_character_2.update(Screen,floor, DISPLAYSURF)
-    pos_y = 20
-    i = 30 
-    debug_test.print("Jumping: ", test_character.jumping, pos_y)
-    debug_test.print("Falling: ", test_character.can_dash, pos_y + i) 
-    i+=i
-    debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
+    if debug_mode:
+        pos_y = 20
+        i = 30 
+        debug_test.print("Jumping: ", test_character.jumping, pos_y)
+        debug_test.print("Can Dash: ", test_character.can_dash, pos_y + i)
+        i+=30
+        debug_test.print("Dashing: ", test_character.dashing, pos_y + i) 
+        i+=30
+        debug_test.print("Crouching: ", test_character.crouch, pos_y + i)
+        i+=30
+        debug_test.print("Moving_right: ", test_character.moving_right, pos_y + i)
+        i+=30
+        debug_test.print("Side Right: ", test_character.side_right, pos_y + i)
+        i+=30
+        debug_test.print("Side Left: ", test_character.side_left, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_2.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
-    print("Hola")
+
 
     pygame.display.flip()
     RELOJ.tick(60)

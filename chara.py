@@ -30,13 +30,16 @@ class character(pygame.sprite.Sprite) :
         self.moving_forward = 0
         self.nor_dashing = 0
         self.dashing_count = 0
+        self.dash_speed = 10
 
         #Movement Booleans
         self.jumping = False
         self.crouch = False
-        self.moving = False
+        self.moving_right = False
         self.dashing = False
         self.can_dash = False
+        self.side_right = True
+        self.side_left = False
 
         #Player
         self.player = _player
@@ -61,81 +64,86 @@ class character(pygame.sprite.Sprite) :
 
     def movements(self):
         userInput = pygame.key.get_pressed()
-
-        #Player 1
-        if self.player == 1:
-            #Right
-            if userInput[pygame.K_RIGHT]:
-                self.rect.x += self.speed
-                self.moving = True
-
-            #Left
-            if userInput[pygame.K_LEFT]:
-                self.rect.x -= self.speed
-
-            #Jump
-            if self.count_jumps < self.starting_jumps:
-                if userInput[pygame.K_UP] and self.crouch == False:
-                    self.count_jumps += 1
-                    self.jumping = True
-
-            #Crouch
-            if userInput[pygame.K_DOWN] and self.jumping == False:
-                self.rect.height = 100
-                self.rect.y = self.crouch_pos
-                self.speed = 2
-                self.crouch = True
-
-            #Boolean for crouch
-            if userInput[pygame.K_DOWN] == False and self.jumping == False:
-                if self.jumping == False:
-                    self.rect.height = 150
-                    self.rect.y = 450
-                    self.speed = 5
-                    self.crouch = False
-
-            #Boolean for forward
-            if self.moving == True and self.nor_dashing <10:
-                self.moving_forward += 1
-            if self.moving_forward >= 10 and userInput[pygame.K_RIGHT] == False:
-                self.moving = False
-                self.moving_forward = 0
-                self.can_dash = False
-            if self.moving_forward < 10 and self.moving_forward > 1:
-                if userInput[pygame.K_RIGHT] == False:
-                    self.can_dash = True
-            if self.can_dash:
+        if self.dashing == False:
+            #Player 1
+            if self.player == 1:
+                #Right
                 if userInput[pygame.K_RIGHT]:
-                    self.dashing = True
-        #Player 2
-        if self.player == 2:
+                    self.rect.x += self.speed
+                    self.moving_right = True
+                    self.side_right = True
+                    self.side_left = False
 
-            #Boolean for crouch
-            if userInput[pygame.K_s] == False and self.jumping == False:
-                if self.jumping == False:
-                    self.rect.height = 150
-                    self.rect.y = 450
-                    self.speed = 5
+                #Left
+                if userInput[pygame.K_LEFT]:
+                    self.rect.x -= self.speed
+                    self.side_right = False
+                    self.side_left = True
 
-            #Right        
-            if userInput[pygame.K_d]:
-                self.rect.x += self.speed
+                #Jump
+                if self.count_jumps < self.starting_jumps:
+                    if userInput[pygame.K_UP] and self.crouch == False:
+                        self.count_jumps += 1
+                        self.jumping = True
 
-            #Left
-            if userInput[pygame.K_a]:
-                self.rect.x -= self.speed
+                #Crouch
+                if userInput[pygame.K_DOWN] and self.jumping == False:
+                    self.rect.height = 100
+                    self.rect.y = self.crouch_pos
+                    self.speed = 2
+                    self.crouch = True
 
-            #Jump
-            if self.count_jumps < self.starting_jumps:
-                if userInput[pygame.K_w]:
-                    self.count_jumps += 10
-                    self.jumping = True
+                #Boolean for crouch
+                if userInput[pygame.K_DOWN] == False and self.jumping == False:
+                    if self.jumping == False:
+                        self.rect.height = 150
+                        self.rect.y = 450
+                        self.speed = 5
+                        self.crouch = False
 
-            #Crouch
-            if userInput[pygame.K_s] and self.jumping == False:
-                self.rect.height = 100
-                self.rect.y = self.crouch_pos
-                self.speed = 2
+                #Boolean for forward
+                if self.moving_right == True and self.nor_dashing <10:
+                    self.moving_forward += 1
+                if self.moving_forward >= 10 and userInput[pygame.K_RIGHT] == False:
+                    self.moving_right = False
+                    self.moving_forward = 0
+                    self.can_dash = False
+                if self.moving_forward < 10 and self.moving_forward > 1:
+                    if userInput[pygame.K_RIGHT] == False:
+                        self.can_dash = True
+                if self.can_dash:
+                    if userInput[pygame.K_RIGHT]:
+                        self.dashing = True
+                        self.can_dash = False
+            #Player 2
+            if self.player == 2:
+
+                #Boolean for crouch
+                if userInput[pygame.K_s] == False and self.jumping == False:
+                    if self.jumping == False:
+                        self.rect.height = 150
+                        self.rect.y = 450
+                        self.speed = 5
+
+                #Right        
+                if userInput[pygame.K_d]:
+                    self.rect.x += self.speed
+
+                #Left
+                if userInput[pygame.K_a]:
+                    self.rect.x -= self.speed
+
+                #Jump
+                if self.count_jumps < self.starting_jumps:
+                    if userInput[pygame.K_w]:
+                        self.count_jumps += 10
+                        self.jumping = True
+
+                #Crouch
+                if userInput[pygame.K_s] and self.jumping == False:
+                    self.rect.height = 100
+                    self.rect.y = self.crouch_pos
+                    self.speed = 2
     
     def jump (self):
         if self.jumping:
@@ -148,9 +156,20 @@ class character(pygame.sprite.Sprite) :
     def dash (self):
         userInput = pygame.key.get_pressed()
         if self.dashing:
-            self.rect.x += self.speed + 2
+            self.rect.x += self.speed + self.dash_speed
+            self.dashing_count += 1
+            if self.dashing_count == 15:
+                self.dashing = False
+                self.dashing_count = 0
+        '''userInput = pygame.key.get_pressed()
+        if self.dashing and self.dashing_count < 15:
+            self.rect.x += self.speed + 10
+            self.dashing_count += 1
+        if self.dashing_count >= 15:
+            self.rect.x += self.speed + 1
             if userInput[pygame.K_RIGHT] == False:
-                self.dashing = 0
+                self.dashing = False
+                self.dashing_count = 0'''
 
     def collisions (self, screen, floor):
         if self.rect.colliderect(floor):
@@ -160,7 +179,7 @@ class character(pygame.sprite.Sprite) :
             self.rect.x = self.rect.x + self.speed
         if self.rect.x >= screen[0] - self.rect.width:
             if self.dashing:
-                self.rect.x = (self.rect.x - self.speed) - 2
+                self.rect.x = self.rect.x - self.speed - self.dash_speed 
             else:
                 self.rect.x = self.rect.x - self.speed
 
