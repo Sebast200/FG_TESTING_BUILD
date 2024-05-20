@@ -44,6 +44,7 @@ class character(pygame.sprite.Sprite) :
         self.can_dash_left = False
         self.side_right = True
         self.side_left = False
+        self.attacking = False
 
         #Player
         self.player = _player
@@ -63,7 +64,7 @@ class character(pygame.sprite.Sprite) :
 
     def movements(self):
         userInput = pygame.key.get_pressed()
-        if self.dashing_right == False and self.dashing_left == False: 
+        if self.dashing_right == False and self.dashing_left == False and self.attacking == False: 
 
             #Player 1
             if self.player == 1:
@@ -232,7 +233,10 @@ class character(pygame.sprite.Sprite) :
             self.count_jumps = 0
             self.jumping = False
         if self.rect.x <= 0:
-            self.rect.x = self.rect.x + self.speed
+            if self.dashing_left:
+                self.rect.x = self.rect.x + self.speed + self.dash_speed 
+            else:
+                self.rect.x = self.rect.x + self.speed
         if self.rect.x >= screen[0] - self.rect.width:
             if self.dashing_right:
                 self.rect.x = self.rect.x - self.speed - self.dash_speed 
