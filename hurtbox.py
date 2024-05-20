@@ -15,7 +15,8 @@ class character(pygame.sprite.Sprite) :
         self.rect = self.image.get_rect()
         self.pos_y = 450
         self.rect.center = (pos_x,self.pos_y)
-        self.image.fill((255, 0, 0, 128), pygame.Rect(2, 2, self.rect_width, self.rect_height))
+        #self.image.fill((255, 0, 0, 128), pygame.Rect(2, 2, self.rect_width, self.rect_height))
+        
         #Speed Variables
         self.speed = 5
         self.start_jump_speed = 5
@@ -73,15 +74,17 @@ class character(pygame.sprite.Sprite) :
                 if userInput[pygame.K_RIGHT] and userInput[pygame.K_LEFT] == False:
                     self.rect.x += self.speed
                     self.moving_right = True
-                    self.side_right = True
-                    self.side_left = False
+                    if self.jumping == False:
+                        self.side_right = True
+                        self.side_left = False
 
                 #Left
                 if userInput[pygame.K_LEFT] and userInput[pygame.K_RIGHT] == False:
                     self.rect.x -= self.speed
                     self.moving_left = True
-                    self.side_right = False
-                    self.side_left = True
+                    if self.jumping == False:
+                        self.side_right = False
+                        self.side_left = True
 
                 #Jump
                 if self.count_jumps < self.starting_jumps:

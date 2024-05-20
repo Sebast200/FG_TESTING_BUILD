@@ -51,7 +51,7 @@ while True:
         i+=30
         debug_test.print("Dashing Right: ", test_character_1.hurtbox.dashing_right, pos_y + i) 
         i+=30
-        debug_test.print("Dashing Right: ", test_character_1.hurtbox.dashing_left, pos_y + i) 
+        debug_test.print("Dashing Left: ", test_character_1.hurtbox.dashing_left, pos_y + i) 
         i+=30
         debug_test.print("Crouching: ", test_character_1.hurtbox.crouch, pos_y + i)
         i+=30
@@ -63,7 +63,15 @@ while True:
         i+=30
         debug_test.print("Side Left: ", test_character_1.hurtbox.side_left, pos_y + i)
         i+=30
-        debug_test.print("Attacking: ", test_character_1.hurtbox.attacking, pos_y + i)
+        debug_test.print("Movement Attack Restrict: ", test_character_1.hurtbox.attacking, pos_y + i)
+        i+=30
+        debug_test.print("Char Attacking: ", test_character_1.char_attacking, pos_y + i)
+        i+=30
+        debug_test.print("Starting Attack Count: ", test_character_1.char_attacking_start_count, pos_y + i)
+        i+=30
+        debug_test.print("Light Attack Count: ", test_character_1.char_attacking_count, pos_y + i)
+        i+=30
+        debug_test.print("Cooldown: ", test_character_1.cooldown, pos_y + i)
     pygame.draw.rect(DISPLAYSURF, 'blue', test_character_1.hurtbox.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
     pygame.display.flip()
@@ -88,14 +96,20 @@ Tareas Completadas:
 -Agregar el modo debug (Clase debug)
 -Agregar la posibilidad de ver los movimientos de la caja 1 en la clase debug
 -Agregar comentario para tareas completadas, pendientes y deseables
+
+20-05-2024 //  3:30
 -Agregar Colision con la pared izquierda de la pantalla al ejecutar un dash
+-Creacion de clases chara_1 y hitbox para el testing de ataques
+-Cambio de la clase chara a hurtbox para implementar a todos los personajes o clases de personajes
+-Agregar hitbox al ataque debil de char_1
+-Agregar temporizadores para los ataques
 
 Tareas pendientes y deseables para los siguientes dias:
 -Pendientes:
-    -Agregar hitboxes
+    -Agregar ataques medio y fuertes
+    -Agregar skin a char_1 cuando no este en movimiento
+    -Modificar ataques para cada side del personaje
 -Deseables:
-    -Agregar golpes debiles y añadirles hitbox
     -Agregar patadas debiles y añadirles hitbox
-    -Agregar skin a caja 1 cuando no este en movimiento
 
 '''
