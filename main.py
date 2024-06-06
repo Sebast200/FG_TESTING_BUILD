@@ -10,7 +10,7 @@ RELOJ = pygame.time.Clock()
 Screen = (1280,720)
 DISPLAYSURF = pygame.display.set_mode((Screen))
 
-pygame.display.set_caption("Testing")
+pygame.display.set_caption("FG_ENGINE_TESTING_BUILD")
 
 # Test Chara box creation
 test_hurtbox = hurtbox.character(300,1)
@@ -28,6 +28,11 @@ debug_mode = True
 #Char_1 Testing
 test_character_1 = char_1.fg_test(test_hurtbox, Screen, floor, DISPLAYSURF)
 
+#Music
+mixer.music.load("music/dudley_theme.mp3")
+mixer.music.set_volume(0.3)
+mixer.music.play()
+
 while True: 
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -39,7 +44,7 @@ while True:
 
     #Gameplay
     test_character_1.update()    
-    test_character_2.update(Screen,floor, DISPLAYSURF)
+    #test_character_2.update(Screen,floor, DISPLAYSURF)
     if debug_mode:
         debug_test.show_buttons()
         pos_y = 20
@@ -72,7 +77,6 @@ while True:
         debug_test.print("Light Attack Count: ", test_character_1.char_attacking_count, pos_y + i)
         i+=30
         debug_test.print("Cooldown: ", test_character_1.cooldown, pos_y + i)
-    pygame.draw.rect(DISPLAYSURF, 'blue', test_character_1.hurtbox.rect,10)
     pygame.draw.rect(DISPLAYSURF,'white',floor)
     pygame.display.flip()
     RELOJ.tick(60)
@@ -104,11 +108,13 @@ Tareas Completadas:
 -Agregar hitbox al ataque debil de char_1
 -Agregar temporizadores para los ataques
 
+06-06-2024 // 
+-Agregar skin al personaje 1 cuando no esta en movimiento
+-Modificar ataques para cada side del personaje
+
 Tareas pendientes y deseables para los siguientes dias:
 -Pendientes:
     -Agregar ataques medio y fuertes
-    -Agregar skin a char_1 cuando no este en movimiento
-    -Modificar ataques para cada side del personaje
 -Deseables:
     -Agregar patadas debiles y añadirles hitbox
 

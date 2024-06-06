@@ -8,19 +8,19 @@ class character(pygame.sprite.Sprite) :
 
         #Rect size
         self.rect_width = 100
-        self.rect_height = 150
+        self.rect_height = 120
 
         #Rect Creation
-        self.image = pygame.Surface ((self.rect_width,self.rect_height), pygame.SRCALPHA)
+        self.image = pygame.Surface ((self.rect_width,self.rect_height))
         self.rect = self.image.get_rect()
-        self.pos_y = 450
+        self.pos_y = 550
         self.rect.center = (pos_x,self.pos_y)
         #self.image.fill((255, 0, 0, 128), pygame.Rect(2, 2, self.rect_width, self.rect_height))
         
         #Speed Variables
         self.speed = 5
-        self.start_jump_speed = 5
-        self.jump_speed = 5
+        self.start_jump_speed = 8.5
+        self.jump_speed = self.start_jump_speed
 
         #Count Variables
         self.starting_jumps = 2
@@ -28,7 +28,8 @@ class character(pygame.sprite.Sprite) :
         
         #Movement Variables
         self.down_count = 1
-        self.crouch_pos = 500
+        self.crouch_height = 70
+        self.crouch_pos = self.pos_y - self.crouch_height + 50
         self.moving_right_count = 0
         self.moving_left_count = 0
         self.dashing_count = 0
@@ -61,7 +62,7 @@ class character(pygame.sprite.Sprite) :
         self.draw(screendisplay)
         
     def draw (self, screen):
-        pygame.draw.rect(screen, 'red', self.rect,10)
+        pygame.draw.rect(screen, 'red', self.rect,5)
 
     def movements(self):
         userInput = pygame.key.get_pressed()
@@ -94,7 +95,7 @@ class character(pygame.sprite.Sprite) :
 
                 #Crouch
                 if userInput[pygame.K_DOWN] and self.jumping == False:
-                    self.rect.height = 100
+                    self.rect.height = self.crouch_height
                     self.rect.y = self.crouch_pos
                     self.speed = 2
                     self.crouch = True
@@ -102,8 +103,7 @@ class character(pygame.sprite.Sprite) :
                 #Boolean for crouch
                 if userInput[pygame.K_DOWN] == False and self.jumping == False:
                     if self.jumping == False:
-                        self.rect.height = 150
-                        self.rect.y = 450
+                        self.rect.height = self.rect_height
                         self.speed = 5
                         self.crouch = False
 
@@ -171,7 +171,6 @@ class character(pygame.sprite.Sprite) :
                 if userInput[pygame.K_s] == False and self.jumping == False:
                     if self.jumping == False:
                         self.rect.height = 150
-                        self.rect.y = 450
                         self.speed = 5
                         self.crouch = False
                 
@@ -207,12 +206,10 @@ class character(pygame.sprite.Sprite) :
     
     def jump (self):
         if self.jumping:
-            self.rect.y -= self.jump_speed * 4 
-            self.jump_speed -= 0.2
+            self.rect.y -= self.jump_speed * 2
+            self.jump_speed -= 0.5
         if self.jump_speed < - self.start_jump_speed:
-            self.jumping = False
-            self.jump_speed = self.start_jump_speed
-            self.rect.y = self.pos_y
+            self.rect.y = 490
     
     def dash (self):
         #Dashing Right
@@ -234,7 +231,11 @@ class character(pygame.sprite.Sprite) :
         if self.rect.colliderect(floor):
             self.rect.y = self.rect.y - self.speed
             self.count_jumps = 0
+            self.jump_speed = self.start_jump_speed
             self.jumping = False
+            print("g")
+        else:
+            print("hla")
         if self.rect.x <= 0:
             if self.dashing_left:
                 self.rect.x = self.rect.x + self.speed + self.dash_speed 
