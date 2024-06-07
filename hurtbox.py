@@ -233,9 +233,6 @@ class character(pygame.sprite.Sprite) :
             self.count_jumps = 0
             self.jump_speed = self.start_jump_speed
             self.jumping = False
-            print("g")
-        else:
-            print("hla")
         if self.rect.x <= 0:
             if self.dashing_left:
                 self.rect.x = self.rect.x + self.speed + self.dash_speed 

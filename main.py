@@ -112,6 +112,9 @@ Tareas Completadas:
 -Agregar skin al personaje 1 cuando no esta en movimiento
 -Modificar ataques para cada side del personaje
 
+07-07-2024
+-Agregar sprite de movimiento a char 1
+
 Tareas pendientes y deseables para los siguientes dias:
 -Pendientes:
     -Agregar ataques medio y fuertes

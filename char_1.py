@@ -23,7 +23,10 @@ class fg_test(pygame.sprite.Sprite):
     def update(self):
         self.attacks()
         self.hurtbox.update(self.screen, self.floor, self.screendisplay)
-        self.idle_sprite()
+        if self.hurtbox.moving_right == False and self.hurtbox.moving_left == False:
+            self.idle_sprite()
+        if self.hurtbox.moving_right == True or self.hurtbox.moving_left == True:
+            self.walk_sprite()
         
     def attacks(self):
         self.light_attack()
@@ -87,5 +90,79 @@ class fg_test(pygame.sprite.Sprite):
         if self.idle_sprite_count < 7:
             self.screendisplay.blit(sprite_set[int(self.idle_sprite_count)], (self.hurtbox.rect.x - pos_x ,self.hurtbox.rect.y - pos_y ))
         if self.idle_sprite_count >= 7:
+            self.idle_sprite_count = 0
+            self.screendisplay.blit(sprite_set[0], (self.hurtbox.rect.x - pos_x,self.hurtbox.rect.y - pos_y))
+    
+    def walk_sprite(self):
+        pos_x = self.hurtbox.rect_width + 43
+        pos_y = self.hurtbox.rect_height - 10
+        sprite_set = []
+        if self.hurtbox.side_left:
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking1.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking2.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking3.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking4.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking5.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking6.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking7.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking8.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking9.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking10.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking11.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking12.png"))
+        else:
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking1.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking2.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking3.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking4.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking5.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking6.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking7.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking8.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking9.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking10.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking11.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking12.png"),True,False))
+        self.idle_sprite_count = self.idle_sprite_count + 0.3
+        if self.idle_sprite_count < 12:
+            self.screendisplay.blit(sprite_set[int(self.idle_sprite_count)], (self.hurtbox.rect.x - pos_x ,self.hurtbox.rect.y - pos_y ))
+        if self.idle_sprite_count >= 12:
+            self.idle_sprite_count = 0
+            self.screendisplay.blit(sprite_set[0], (self.hurtbox.rect.x - pos_x,self.hurtbox.rect.y - pos_y))
+
+    def jumping_sprite (self):
+        pos_x = self.hurtbox.rect_width + 43
+        pos_y = self.hurtbox.rect_height - 10
+        sprite_set = []
+        if self.hurtbox.side_left:
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking1.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking2.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking3.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking4.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking5.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking6.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking7.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking8.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking9.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking10.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking11.png"))
+            sprite_set.append(pygame.image.load("sprites/dudley/walking/dudley_walking12.png"))
+        else:
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking1.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking2.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking3.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking4.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking5.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking6.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking7.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking8.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking9.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking10.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking11.png"),True,False))
+            sprite_set.append(pygame.transform.flip(pygame.image.load("sprites/dudley/walking/dudley_walking12.png"),True,False))
+        self.idle_sprite_count = self.idle_sprite_count + 0.3
+        if self.idle_sprite_count < 12:
+            self.screendisplay.blit(sprite_set[int(self.idle_sprite_count)], (self.hurtbox.rect.x - pos_x ,self.hurtbox.rect.y - pos_y ))
+        if self.idle_sprite_count >= 12:
             self.idle_sprite_count = 0
             self.screendisplay.blit(sprite_set[0], (self.hurtbox.rect.x - pos_x,self.hurtbox.rect.y - pos_y))
